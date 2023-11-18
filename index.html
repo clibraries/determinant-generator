@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Determinant Code generator</title>
+  <script src="compiler.js"></script>
+</head>
+<body>
+
+<h1>Determinant Code generator</h1>
+
+<p>
+Writing a determinant function for a matrix larger than 3x3 is tedious and error prone.
+Determinant can be implemented recursively using co-factor expansion, but it can be difficult for a compiler to optimize.
+Here is a code generator that does it for you.
+</p>
+
+<form id="form">
+<label>Dimension: <input type="number" name="dimension" placeholder="(4, 5, etc)" min="1" max="24"></input></label>
+<input type="submit" value="Generate"></input>
+</form>
+
+<h2>Output</h2>
+
+<h3>Expression</h3>
+
+<textarea id="exp" rows="40" cols="100" readonly="readonly"></textarea>
+
+<h3>Code</h3>
+
+<textarea id="code" rows="40" cols="100" readonly="readonly"></textarea>
+
+<script>
+  document.getElementById("form").onsubmit = function(e) {
+      e.preventDefault();
+      var data = new FormData(this);
+      var size = parseInt(data.get("dimension"));
+
+      var expr = determinantExpr(size);
+      var result = compile(expr, size);
+
+      document.getElementById("exp").value = result.math;
+      document.getElementById("code").value = result.program;
+  };
+</script>
+
+</body>
+</html
